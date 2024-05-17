@@ -20,8 +20,8 @@ def count_surrounding(grid : np.array, coordinates : tuple) -> int:
     # lbcorner
     # rtcorner
     # rbcorner
-    y = coordinates[1] 
-    x = coordinates[0]
+    y = coordinates[0]
+    x = coordinates[1]
     neighbors = []
     # print(f"coordinates : {coordinates}")
 
@@ -62,21 +62,21 @@ def count_surrounding(grid : np.array, coordinates : tuple) -> int:
     # print(count)
 
     return count
-    
+
 def update_world(world : np.array) -> None:
     world_copy = world.copy()
     
-    for i in range(len(world[0])):
-        for j in range (len(world)):
+    for i in range(len(world)):
+        for j in range (len(world[0])):
             value = world_copy[i][j]
             surrounding : int = count_surrounding(world, (i , j))
             if value == 1:   
                 if surrounding > 3:
-                    world_copy[j][i] = 0
+                    world_copy[i][j] = 0
                 elif surrounding < 2:
-                    world_copy[j][i] = 0
+                    world_copy[i][j] = 0
             if value == 0 and surrounding == 3:
-                world_copy[j][i] = 1
+                world_copy[i][j] = 1
     return world_copy
 # print(update_world(randomWorld))
 def run_animation(world, iterations, interval):
@@ -96,5 +96,6 @@ def run_animation(world, iterations, interval):
     ani = animation.FuncAnimation(fig, update, frames=iterations, interval = interval, repeat = False)
     plt.show()
 
-
-run_animation(init_world(200, randomize=True, high_chance=.53), 500, 50)
+world = init_world(150, randomize=True, high_chance=.60)
+print(world)
+run_animation(world, 200, 75)
